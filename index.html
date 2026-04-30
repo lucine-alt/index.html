@@ -1,4 +1,33 @@
-<!DOCTYPE html>
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: #00ff00;
+  font-family: monospace;
+  overflow: hidden;
+}
+
+#matrix {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+#terminal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.7);
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+  border: 1px solid #0f0;
+  box-shadow: 0 0 20px #0f0;
+  font-size: 16px;
+}
+</style><!DOCTYPE html>
 <html>
 <head>
 <title>System Breach</title>
