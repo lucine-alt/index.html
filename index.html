@@ -1,79 +1,131 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>System Terminal</title>
+<title>SECURE TERMINAL</title>
+
 <style>
 body {
-  margin: 0;
-  background: black;
-  color: #00ff00;
-  font-family: monospace;
+  margin:0;
+  background:black;
+  color:#0f0;
+  font-family:monospace;
+  overflow:hidden;
+}
+
+/* Glitch effect */
+.glitch {
+  font-size:40px;
+  text-align:center;
+  margin-top:100px;
+  animation: glitch 1s infinite;
+}
+
+@keyframes glitch {
+  0% { text-shadow: 2px 0 red; }
+  50% { text-shadow: -2px 0 blue; }
+  100% { text-shadow: 2px 0 red; }
 }
 
 #terminal {
-  padding: 20px;
-  white-space: pre-line;
+  padding:20px;
 }
 
-.cursor {
-  display: inline-block;
-  width: 10px;
-  background: #00ff00;
-  animation: blink 1s infinite;
+input {
+  background:black;
+  border:1px solid #0f0;
+  color:#0f0;
+  padding:5px;
 }
 
-@keyframes blink {
-  50% { background: transparent; }
+/* Matrix canvas */
+canvas {
+  position:fixed;
+  top:0;
+  left:0;
 }
 </style>
 </head>
 
 <body>
 
-<div id="terminal"></div>
+<canvas id="matrix"></canvas>
+
+<div class="glitch">SYSTEM BREACH</div>
+
+<div id="terminal">
+> Enter Password: <input type="password" id="pass" onkeydown="check(event)">
+<div id="output"></div>
+</div>
 
 <script>
-var text = [
-"> Initializing system...",
-"> Connecting to secure server...",
-"> Bypassing firewall...",
-"> Injecting payload...",
-"> Accessing database...",
-"> Downloading files...",
-"> Decrypting passwords...",
-"> WARNING: TRACE DETECTED ⚠️",
-"> Bypassing trace...",
-"> ACCESS GRANTED 😈",
-"> Welcome, Admin."
-];
+// Matrix effect
+var c = document.getElementById("matrix");
+var ctx = c.getContext("2d");
+c.height = window.innerHeight;
+c.width = window.innerWidth;
 
-var i = 0;
-var speed = 40;
-var terminal = document.getElementById("terminal");
+var letters = "01";
+letters = letters.split("");
+var font_size = 14;
+var columns = c.width/font_size;
+var drops = [];
 
-function typeLine() {
-  if (i < text.length) {
-    var line = text[i];
-    var charIndex = 0;
-    var currentLine = document.createElement("div");
-    terminal.appendChild(currentLine);
+for(var x=0;x<columns;x++) drops[x]=1;
 
-    function typeChar() {
-      if (charIndex < line.length) {
-        currentLine.innerHTML += line.charAt(charIndex);
-        charIndex++;
-        setTimeout(typeChar, speed);
+function draw(){
+  ctx.fillStyle="rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle="#0f0";
+  ctx.font=font_size+"px monospace";
+
+  for(var i=0;i<drops.length;i++){
+    var text=letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text,i*font_size,drops[i]*font_size);
+    if(drops[i]*font_size>c.height && Math.random()>0.975)
+      drops[i]=0;
+    drops[i]++;
+  }
+}
+setInterval(draw,33);
+
+// Password check
+function check(e){
+  if(e.key==="Enter"){
+    var pass=document.getElementById("pass").value;
+    var out=document.getElementById("output");
+
+    out.innerHTML+="<br>> Checking password...";
+
+    setTimeout(()=>{
+      if(pass==="root"){
+        hackSequence(out);
       } else {
-        i++;
-        setTimeout(typeLine, 500);
+        out.innerHTML+="<br>> ACCESS DENIED ❌";
       }
-    }
-
-    typeChar();
+    },1000);
   }
 }
 
-typeLine();
+// Hack animation
+function hackSequence(out){
+  var lines=[
+    "> Access granted 😈",
+    "> Injecting virus...",
+    "> Cracking system...",
+    "> Downloading secrets...",
+    "> DONE ✔️"
+  ];
+
+  var i=0;
+  function next(){
+    if(i<lines.length){
+      out.innerHTML+="<br>"+lines[i];
+      i++;
+      setTimeout(next,800);
+    }
+  }
+  next();
+}
 </script>
 
 </body>
