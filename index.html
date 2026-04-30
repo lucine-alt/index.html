@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>SECURE TERMINAL</title>
+<title>Hacked System</title>
 
 <style>
 body {
@@ -12,22 +12,40 @@ body {
   overflow:hidden;
 }
 
-/* Glitch effect */
-.glitch {
-  font-size:40px;
+/* Desktop */
+#desktop {
+  display:none;
+  width:100%;
+  height:100vh;
+  background:black;
+}
+
+/* Icons */
+.icon {
+  width:80px;
   text-align:center;
-  margin-top:100px;
-  animation: glitch 1s infinite;
+  margin:20px;
+  cursor:pointer;
 }
 
-@keyframes glitch {
-  0% { text-shadow: 2px 0 red; }
-  50% { text-shadow: -2px 0 blue; }
-  100% { text-shadow: 2px 0 red; }
+/* Terminal window */
+#terminalWindow {
+  display:none;
+  position:absolute;
+  top:100px;
+  left:50px;
+  width:80%;
+  height:60%;
+  background:black;
+  border:1px solid #0f0;
+  padding:10px;
+  overflow:auto;
 }
 
-#terminal {
-  padding:20px;
+/* Login */
+#login {
+  text-align:center;
+  margin-top:150px;
 }
 
 input {
@@ -50,25 +68,31 @@ canvas {
 
 <canvas id="matrix"></canvas>
 
-<div class="glitch">SYSTEM BREACH</div>
+<div id="login">
+<h1>SYSTEM LOCKED</h1>
+<p>Enter Root Password:</p>
+<input type="password" id="pass" onkeydown="login(event)">
+</div>
 
-<div id="terminal">
-> Enter Password: <input type="password" id="pass" onkeydown="check(event)">
-<div id="output"></div>
+<div id="desktop">
+
+<div class="icon" onclick="openTerminal()">💻<br>Terminal</div>
+
+<div id="terminalWindow"></div>
+
 </div>
 
 <script>
-// Matrix effect
-var c = document.getElementById("matrix");
-var ctx = c.getContext("2d");
-c.height = window.innerHeight;
-c.width = window.innerWidth;
+// MATRIX EFFECT
+var c=document.getElementById("matrix");
+var ctx=c.getContext("2d");
+c.height=window.innerHeight;
+c.width=window.innerWidth;
 
-var letters = "01";
-letters = letters.split("");
-var font_size = 14;
-var columns = c.width/font_size;
-var drops = [];
+var letters="01".split("");
+var font_size=14;
+var columns=c.width/font_size;
+var drops=[];
 
 for(var x=0;x<columns;x++) drops[x]=1;
 
@@ -88,38 +112,37 @@ function draw(){
 }
 setInterval(draw,33);
 
-// Password check
-function check(e){
+// LOGIN
+function login(e){
   if(e.key==="Enter"){
     var pass=document.getElementById("pass").value;
-    var out=document.getElementById("output");
-
-    out.innerHTML+="<br>> Checking password...";
-
-    setTimeout(()=>{
-      if(pass==="root"){
-        hackSequence(out);
-      } else {
-        out.innerHTML+="<br>> ACCESS DENIED ❌";
-      }
-    },1000);
+    if(pass==="root"){
+      document.getElementById("login").style.display="none";
+      document.getElementById("desktop").style.display="block";
+    } else {
+      alert("ACCESS DENIED ❌");
+    }
   }
 }
 
-// Hack animation
-function hackSequence(out){
+// TERMINAL
+function openTerminal(){
+  var term=document.getElementById("terminalWindow");
+  term.style.display="block";
+
+  term.innerHTML="> Booting system...<br>";
+
   var lines=[
-    "> Access granted 😈",
-    "> Injecting virus...",
-    "> Cracking system...",
-    "> Downloading secrets...",
-    "> DONE ✔️"
+    "> Connecting...",
+    "> Injecting exploit...",
+    "> Accessing files...",
+    "> SUCCESS 😈"
   ];
 
   var i=0;
   function next(){
     if(i<lines.length){
-      out.innerHTML+="<br>"+lines[i];
+      term.innerHTML+=lines[i]+"<br>";
       i++;
       setTimeout(next,800);
     }
