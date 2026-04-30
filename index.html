@@ -1,132 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Shan State</title>
+<meta charset="UTF-8">
+<title>Azenx Prince</title>
 
 <style>
 body {
   margin: 0;
-  height: 100vh;
-  font-family: monospace;
-  color: #00ff00;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-/* BACKGROUND IMAGE */
-#bg {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  animation: zoom 10s infinite alternate;
-  z-index: -2;
-}
-
-/* DARK OVERLAY */
-#overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: -1;
-}
-
-/* BOX */
-#box {
+  font-family: Arial;
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  background-size: 300% 300%;
+  animation: bg 6s infinite;
+  color: white;
   text-align: center;
-  padding: 25px;
-  border: 1px solid #0f0;
-  box-shadow: 0 0 30px #0f0;
-  background: rgba(0,0,0,0.7);
-  width: 90%;
-  max-width: 400px;
 }
 
-/* TEXT */
-h2 {
-  font-size: 26px;
-  text-shadow: 0 0 10px #0f0;
+@keyframes bg {
+  0% {background-position: 0%;}
+  100% {background-position: 100%;}
 }
 
-/* BUTTON */
+.container {
+  margin-top: 50px;
+}
+
+img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px cyan;
+}
+
+h1 {
+  text-shadow: 0 0 10px cyan;
+}
+
 button {
-  width: 100%;
-  margin-top: 15px;
-  background: black;
-  color: #0f0;
-  border: 2px solid #0f0;
-  padding: 12px;
+  width: 80%;
+  padding: 15px;
+  margin: 10px;
+  border: none;
+  border-radius: 30px;
+  font-size: 18px;
+  color: white;
+  background: linear-gradient(45deg, pink, purple);
+  transition: 0.3s;
 }
 
-/* OUTPUT */
-#output {
-  margin-top: 15px;
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #ff00ff;
 }
 
-/* ZOOM EFFECT */
-@keyframes zoom {
-  from { transform: scale(1); }
-  to { transform: scale(1.1); }
+#typing {
+  margin: 10px;
+  font-size: 18px;
 }
 </style>
-
 </head>
 
 <body>
 
-<div id="bg"></div>
-<div id="overlay"></div>
+<div class="container">
+  <img src="https://i.imgur.com/yourphoto.jpg">
+  <h1>Azenx Prince</h1>
+  <p id="typing"></p>
 
-<div id="box">
-  <h2>ရှမ်းပြည်နယ် 🌄</h2>
-  <p>Inle • Taunggyi • Kalaw</p>
-
-  <button onclick="start()">START SYSTEM</button>
-
-  <div id="output"></div>
+  <button onclick="go('https://facebook.com')">Facebook</button>
+  <button onclick="go('https://tiktok.com')">TikTok</button>
+  <button onclick="go('https://youtube.com')">YouTube</button>
 </div>
 
+<!-- typing effect -->
 <script>
-
-/* SLIDESHOW IMAGES */
-let images = [
-  "https://upload.wikimedia.org/wikipedia/commons/3/3c/Inle_Lake_Myanmar.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/0/0e/Taunggyi.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/5/57/Kalaw.jpg"
-];
-
+let text = "Welcome to my world 🌍🔥";
 let i = 0;
-let bg = document.getElementById("bg");
-
-/* CHANGE IMAGE EVERY 4s */
-function changeBg() {
-  bg.style.backgroundImage = "url('" + images[i] + "')";
-  i = (i + 1) % images.length;
-}
-setInterval(changeBg, 4000);
-changeBg();
-
-/* HACKER TEXT */
-function start() {
-  let text = "Access Granted...\nLoading Shan Data...\nEnjoy Nature 🌄";
-  let i = 0;
-  let out = document.getElementById("output");
-
-  function type() {
-    if (i < text.length) {
-      out.innerHTML += text.charAt(i);
-      i++;
-      setTimeout(type, 40);
-    }
+function type() {
+  if (i < text.length) {
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(type, 50);
   }
-  type();
 }
+type();
 
+function go(link){
+  window.location.href = link;
+}
 </script>
+
+<!-- music -->
+<audio autoplay loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
 
 </body>
 </html>
