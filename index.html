@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Hacked System</title>
+<title>System Breach</title>
 
 <style>
 body {
@@ -21,11 +21,12 @@ body {
 
 #terminal {
   padding: 20px;
+  font-size: 14px;
+  white-space: pre-line;
 }
 
 .glitch {
-  font-size: 30px;
-  position: relative;
+  font-size: 28px;
   color: #0f0;
   animation: glitch 1s infinite;
 }
@@ -36,16 +37,16 @@ body {
   100% { text-shadow: 2px 0 red; }
 }
 
-.cursor {
-  display: inline-block;
-  width: 10px;
-  background: #0f0;
-  animation: blink 1s infinite;
+#progress {
+  width: 100%;
+  background: #111;
+  margin-top: 10px;
 }
 
-@keyframes blink {
-  0%,50%,100% { opacity: 1; }
-  25%,75% { opacity: 0; }
+#bar {
+  width: 0%;
+  height: 10px;
+  background: #0f0;
 }
 </style>
 </head>
@@ -55,17 +56,20 @@ body {
 <canvas id="matrix"></canvas>
 
 <div id="terminal">
-  <div class="glitch">ACCESS GRANTED</div>
-  <p id="typing"></p>
-  <span class="cursor"></span>
+  <div class="glitch">ACCESSING SYSTEM...</div>
+  <div id="output"></div>
+
+  <div id="progress">
+    <div id="bar"></div>
+  </div>
 </div>
 
-<audio id="sound" autoplay loop>
-  <source src="https://www.soundjay.com/button/beep-07.wav">
+<audio autoplay loop>
+<source src="https://www.soundjay.com/button/beep-07.wav">
 </audio>
 
 <script>
-// Matrix Effect
+// MATRIX
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
@@ -79,12 +83,11 @@ let fontSize = 14;
 let columns = canvas.width / fontSize;
 let drops = [];
 
-for (let x = 0; x < columns; x++)
-  drops[x] = 1;
+for (let x = 0; x < columns; x++) drops[x] = 1;
 
 function draw() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.fillStyle = "#0f0";
   ctx.font = fontSize + "px monospace";
@@ -101,18 +104,45 @@ function draw() {
 }
 setInterval(draw, 33);
 
-// Typing Effect
-let text = "Welcome to the system...\nTracking IP...\nAccessing data...\nComplete.";
-let i = 0;
+// TERMINAL TEXT
+let lines = [
+"[+] Connecting to server...",
+"[+] Bypassing firewall...",
+"[+] Injecting payload...",
+"[+] Accessing database...",
+"[+] Extracting files...",
+"[+] Tracking IP address...",
+"[+] Location found: UNKNOWN",
+"[+] Uploading data...",
+"[+] SYSTEM BREACHED ✔",
+"",
+"Welcome, Admin 😈"
+];
 
-function typeWriter() {
-  if (i < text.length) {
-    document.getElementById("typing").innerHTML += text.charAt(i);
+let i = 0;
+let output = document.getElementById("output");
+
+function showLine() {
+  if (i < lines.length) {
+    output.innerHTML += lines[i] + "\n";
     i++;
-    setTimeout(typeWriter, 50);
+    setTimeout(showLine, 800);
   }
 }
-typeWriter();
+showLine();
+
+// LOADING BAR
+let width = 0;
+let bar = document.getElementById("bar");
+
+function load() {
+  if (width < 100) {
+    width++;
+    bar.style.width = width + "%";
+    setTimeout(load, 80);
+  }
+}
+load();
 </script>
 
 </body>
