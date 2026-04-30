@@ -7,29 +7,36 @@
 body {
   margin: 0;
   height: 100vh;
-  background: url('https://upload.wikimedia.org/wikipedia/commons/3/3c/Inle_Lake_Myanmar.jpg') no-repeat center center;
-  background-size: cover;
   font-family: monospace;
   color: #00ff00;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+}
+
+/* BACKGROUND IMAGE */
+#bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  animation: zoom 10s infinite alternate;
+  z-index: -2;
 }
 
 /* DARK OVERLAY */
-body::before {
-  content: "";
-  position: absolute;
+#overlay {
+  position: fixed;
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.5);
-  top: 0;
-  left: 0;
+  z-index: -1;
 }
 
-/* CENTER BOX */
+/* BOX */
 #box {
-  position: relative;
   text-align: center;
   padding: 25px;
   border: 1px solid #0f0;
@@ -45,10 +52,6 @@ h2 {
   text-shadow: 0 0 10px #0f0;
 }
 
-p {
-  font-size: 16px;
-}
-
 /* BUTTON */
 button {
   width: 100%;
@@ -57,12 +60,17 @@ button {
   color: #0f0;
   border: 2px solid #0f0;
   padding: 12px;
-  font-size: 16px;
 }
 
 /* OUTPUT */
 #output {
   margin-top: 15px;
+}
+
+/* ZOOM EFFECT */
+@keyframes zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
 }
 </style>
 
@@ -70,9 +78,12 @@ button {
 
 <body>
 
+<div id="bg"></div>
+<div id="overlay"></div>
+
 <div id="box">
-  <h2>ရှမ်းပြည်နယ်ရဲ့အလှ 🌄</h2>
-  <p>Inle Lake • Taunggyi • Kalaw</p>
+  <h2>ရှမ်းပြည်နယ် 🌄</h2>
+  <p>Inle • Taunggyi • Kalaw</p>
 
   <button onclick="start()">START SYSTEM</button>
 
@@ -80,8 +91,28 @@ button {
 </div>
 
 <script>
+
+/* SLIDESHOW IMAGES */
+let images = [
+  "https://upload.wikimedia.org/wikipedia/commons/3/3c/Inle_Lake_Myanmar.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/0/0e/Taunggyi.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/5/57/Kalaw.jpg"
+];
+
+let i = 0;
+let bg = document.getElementById("bg");
+
+/* CHANGE IMAGE EVERY 4s */
+function changeBg() {
+  bg.style.backgroundImage = "url('" + images[i] + "')";
+  i = (i + 1) % images.length;
+}
+setInterval(changeBg, 4000);
+changeBg();
+
+/* HACKER TEXT */
 function start() {
-  let text = "Welcome to Shan State...\nLoading...\nSystem Ready ✔";
+  let text = "Access Granted...\nLoading Shan Data...\nEnjoy Nature 🌄";
   let i = 0;
   let out = document.getElementById("output");
 
@@ -89,11 +120,12 @@ function start() {
     if (i < text.length) {
       out.innerHTML += text.charAt(i);
       i++;
-      setTimeout(type, 50);
+      setTimeout(type, 40);
     }
   }
   type();
 }
+
 </script>
 
 </body>
