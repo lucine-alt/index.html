@@ -8,12 +8,21 @@
 body {
   margin:0;
   font-family: Arial;
-  background: linear-gradient(135deg, #000000, #1a1a1a);
+  background: linear-gradient(135deg,#000000,#1a1a1a);
   color:white;
   text-align:center;
+  overflow:hidden;
 }
 
-/* Profile */
+/* MATRIX BACKGROUND */
+canvas {
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
+/* PROFILE */
 .profile {
   margin-top:60px;
 }
@@ -29,13 +38,14 @@ body {
 h1 {
   margin:10px;
   font-size:28px;
+  text-shadow:0 0 10px #00ffcc;
 }
 
 .bio {
   color:#aaa;
 }
 
-/* Buttons */
+/* BUTTON */
 .btn {
   display:block;
   width:80%;
@@ -54,7 +64,7 @@ h1 {
   transform:scale(1.05);
 }
 
-/* Start Button */
+/* START BUTTON */
 .start {
   background:black;
   border:1px solid #00ff00;
@@ -67,39 +77,67 @@ h1 {
 
 <body>
 
+<!-- MATRIX -->
+<canvas id="matrix"></canvas>
+
 <div class="profile">
-
 <img src="https://i.ibb.co/0jQz0hF/profile.jpg">
-
 <h1>Azenx Prince</h1>
 <p class="bio">Welcome to my world 🌍🔥</p>
-
 </div>
 
-<!-- START -->
-<button class="btn start" onclick="start()">▶ Enter</button>
+<button class="btn start" onclick="start()">▶ ENTER</button>
 
-<!-- LINKS -->
 <div id="links" style="display:none;">
-
 <a class="btn" href="https://www.facebook.com/azenxprince?mibextid=ZbWKwL">Facebook</a>
-
 <a class="btn" href="https://tiktok.com/@azenxprince">TikTok</a>
-
 <a class="btn" href="https://www.youtube.com/@lunaprincezenx">YouTube</a>
-
 </div>
 
 <!-- MUSIC -->
 <audio id="music">
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
 </audio>
 
 <script>
+// START
 function start(){
   document.getElementById("music").play();
   document.getElementById("links").style.display="block";
 }
+
+// MATRIX EFFECT
+var c = document.getElementById("matrix");
+var ctx = c.getContext("2d");
+c.height = window.innerHeight;
+c.width = window.innerWidth;
+
+var letters = "01";
+letters = letters.split("");
+
+var font_size = 14;
+var columns = c.width/font_size;
+var drops = [];
+
+for(var x=0;x<columns;x++) drops[x]=1;
+
+function draw(){
+  ctx.fillStyle="rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle="#0f0";
+  ctx.font=font_size+"px monospace";
+
+  for(var i=0;i<drops.length;i++){
+    var text=letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text,i*font_size,drops[i]*font_size);
+
+    if(drops[i]*font_size>c.height && Math.random()>0.975)
+      drops[i]=0;
+
+    drops[i]++;
+  }
+}
+setInterval(draw,33);
 </script>
 
 </body>
