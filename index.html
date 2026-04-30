@@ -1,24 +1,93 @@
-<button onclick="copyText()">COPY</button>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Shan State Hacker</title>
 
-<p id="text">Shan State is beautiful 🌄</p>
+<style>
+body {
+  margin: 0;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/3/3c/Inle_Lake_Myanmar.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #00ff00;
+  font-family: monospace;
+}
+
+/* Overlay box */
+#box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.7);
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+  border: 1px solid #0f0;
+  box-shadow: 0 0 20px #0f0;
+}
+
+/* Button */
+button {
+  width: 100%;
+  margin-top: 10px;
+  background: black;
+  color: #0f0;
+  border: 1px solid #0f0;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#output {
+  margin-top: 10px;
+  white-space: pre-line;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- Sound -->
+<audio controls autoplay loop>
+  <source src="https://www.soundjay.com/nature/water-1.mp3" type="audio/mpeg">
+</audio>
+
+<div id="box">
+
+<h2>ရှမ်းပြည်နယ်ရဲ့အလှ 🌄</h2>
+<p>Inle Lake • Taunggyi • Kalaw</p>
+
+<button onclick="start()">START SYSTEM</button>
+
+<div id="output"></div>
+
+</div>
 
 <script>
-function copyText() {
-  let text = document.getElementById("text").innerText;
-  navigator.clipboard.writeText(text);
-  alert("Copied!");
+function start() {
+  let lines = [
+  "[+] Welcome to Shan State...",
+  "[+] Loading beauty data...",
+  "[+] Nature detected 🌄",
+  "[+] Water sound active 🔊",
+  "[+] System ready ✔",
+  "",
+  "Enjoy the view 😈"
+  ];
+
+  let i = 0;
+  let out = document.getElementById("output");
+
+  function show() {
+    if (i < lines.length) {
+      out.innerHTML += lines[i] + "\n";
+      i++;
+      setTimeout(show, 800);
+    }
+  }
+  show();
 }
 </script>
-<button onclick="copyText()" style="background:black;color:#0f0;border:1px solid #0f0;padding:10px;">
-[ COPY DATA ]
-</button>
 
-<p id="text">ACCESS CODE: 192.168.1.1</p>
-
-<script>
-function copyText() {
-  let text = document.getElementById("text").innerText;
-  navigator.clipboard.writeText(text);
-  alert("DATA COPIED ✔");
-}
-</script>
+</body>
+</html>
