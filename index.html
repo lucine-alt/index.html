@@ -2,62 +2,44 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Azenx Prince</title>
+<title>Azenx System</title>
 
 <style>
 body {
-  margin: 0;
-  font-family: Arial;
-  background: linear-gradient(45deg, #6a11cb, #2575fc);
-  background-size: 300% 300%;
-  animation: bg 6s infinite alternate;
-  color: white;
-  text-align: center;
+  margin:0;
+  background:black;
+  color:#00ff00;
+  font-family: monospace;
+  text-align:center;
 }
 
-@keyframes bg {
-  0% {background-position: left;}
-  100% {background-position: right;}
+/* Glow Box */
+.box {
+  margin-top:80px;
+  padding:20px;
+  border:1px solid #00ff00;
+  box-shadow:0 0 20px #00ff00;
 }
 
-.container {
-  margin-top: 50px;
-}
-
-img {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  box-shadow: 0 0 25px cyan;
-}
-
-h1 {
-  margin: 10px;
-  font-size: 32px;
-  text-shadow: 0 0 10px cyan;
-}
-
-#typing {
-  margin: 10px;
-  font-size: 18px;
-  color: #eee;
-}
-
+/* Button */
 button {
-  width: 80%;
-  padding: 15px;
-  margin: 10px;
-  border: none;
-  border-radius: 30px;
-  font-size: 18px;
-  color: white;
-  background: linear-gradient(45deg, #ff00cc, #3333ff);
-  transition: 0.3s;
+  background:black;
+  color:#00ff00;
+  border:1px solid #00ff00;
+  padding:15px;
+  width:80%;
+  margin:10px;
+  font-size:18px;
 }
 
 button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #ff00ff;
+  background:#00ff00;
+  color:black;
+}
+
+/* Matrix text */
+#text {
+  margin:20px;
 }
 </style>
 
@@ -65,47 +47,64 @@ button:hover {
 
 <body>
 
-<div class="container">
+<div class="box">
 
-  <!-- Profile Image -->
-  <img src="https://i.ibb.co/0jQz0hF/profile.jpg">
+<h2 id="text"></h2>
 
-  <h1>Azenx Prince</h1>
+<!-- START -->
+<button onclick="startSystem()">▶ START SYSTEM</button>
 
-  <p id="typing"></p>
+<!-- Links -->
+<div id="links" style="display:none;">
 
-  <!-- Buttons -->
-  <button onclick="go('https://www.facebook.com/azenxprince?mibextid=ZbWKwL')">Facebook</button>
+<button onclick="go('https://www.facebook.com/azenxprince?mibextid=ZbWKwL')">Facebook</button>
 
-  <button onclick="go('https://tiktok.com/@azenxprince')">TikTok</button>
+<button onclick="go('https://tiktok.com/@azenxprince')">TikTok</button>
 
-  <button onclick="go('https://www.youtube.com/@lunaprincezenx')">YouTube</button>
+<button onclick="go('https://www.youtube.com/@lunaprincezenx')">YouTube</button>
 
 </div>
 
-<!-- Typing Effect -->
-<script>
-let text = "Welcome to my world 🌍🔥";
-let i = 0;
+</div>
 
-function type() {
-  if (i < text.length) {
-    document.getElementById("typing").innerHTML += text.charAt(i);
-    i++;
-    setTimeout(type, 50);
-  }
-}
-type();
-
-function go(link){
-  window.location.href = link;
-}
-</script>
-
-<!-- Music -->
-<audio autoplay loop>
+<!-- SOUND -->
+<audio id="music">
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
 </audio>
+
+<audio id="beep">
+  <source src="https://www.soundjay.com/button/sounds/button-16.mp3">
+</audio>
+
+<script>
+
+let msg = "ACCESS GRANTED... WELCOME AZENX PRINCE";
+let i = 0;
+
+function type(){
+  if(i < msg.length){
+    document.getElementById("text").innerHTML += msg.charAt(i);
+    i++;
+    setTimeout(type,50);
+  }
+}
+
+function startSystem(){
+  document.getElementById("beep").play(); // beep sound
+  document.getElementById("music").play(); // music start
+  type();
+
+  setTimeout(()=>{
+    document.getElementById("links").style.display="block";
+  },2000);
+}
+
+function go(link){
+  document.getElementById("beep").play();
+  window.location.href = link;
+}
+
+</script>
 
 </body>
 </html>
