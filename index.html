@@ -1,28 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Hacked</title>
+<title>Secure Login</title>
+
 <style>
 body {
-    margin: 0;
-    background: black;
-    color: #00ff00;
-    font-family: monospace;
-    overflow: hidden;
+  background: black;
+  color: #00ff00;
+  font-family: monospace;
+  text-align: center;
+  margin-top: 100px;
+}
+
+input, button {
+  background: black;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  padding: 10px;
+  margin: 5px;
+  font-family: monospace;
+}
+
+#result {
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>SECURE SYSTEM LOGIN</h1>
+
+<input type="text" id="user" placeholder="Username"><br>
+<input type="password" id="pass" placeholder="Password"><br>
+<button onclick="login()">LOGIN</button>
+
+<div id="result"></div>
+
+<script>
+function login() {
+  document.getElementById("result").innerHTML = "ACCESS GRANTED 😈<br>WELCOME USER...";
+}
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
+<title>Hacker System</title>
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: #00ff00;
+  font-family: monospace;
+  text-align: center;
 }
 
 canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
-#text {
-    position: absolute;
-    top: 40%;
-    width: 100%;
-    text-align: center;
-    font-size: 24px;
+#loginBox {
+  position: absolute;
+  top: 30%;
+  width: 100%;
+}
+
+input, button {
+  background: black;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  padding: 10px;
+  margin: 5px;
+}
+
+#loading {
+  width: 80%;
+  height: 20px;
+  border: 1px solid #00ff00;
+  margin: auto;
+  display: none;
+}
+
+#bar {
+  width: 0%;
+  height: 100%;
+  background: #00ff00;
+}
+
+#result {
+  margin-top: 20px;
 }
 </style>
 </head>
@@ -31,60 +102,92 @@ canvas {
 
 <canvas id="matrix"></canvas>
 
-<div id="text"></div>
+<div id="loginBox">
+  <h1>SECURE SYSTEM</h1>
+  <input type="text" placeholder="Username"><br>
+  <input type="password" id="pass" placeholder="Password"><br>
+  <button onclick="startHack()">LOGIN</button>
+
+  <div id="loading">
+    <div id="bar"></div>
+  </div>
+
+  <div id="result"></div>
+</div>
 
 <script>
-// Matrix rain effect
+// Matrix effect
 var c = document.getElementById("matrix");
 var ctx = c.getContext("2d");
-
 c.height = window.innerHeight;
 c.width = window.innerWidth;
 
 var letters = "01";
 letters = letters.split("");
-
 var font_size = 14;
 var columns = c.width/font_size;
 var drops = [];
 
 for(var x = 0; x < columns; x++)
-    drops[x] = 1;
+  drops[x] = 1;
 
 function draw() {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-    ctx.fillRect(0, 0, c.width, c.height);
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle = "#0F0";
+  ctx.font = font_size + "px monospace";
 
-    ctx.fillStyle = "#0F0";
-    ctx.font = font_size + "px monospace";
+  for(var i=0;i<drops.length;i++){
+    var text = letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text,i*font_size,drops[i]*font_size);
 
-    for(var i = 0; i < drops.length; i++) {
-        var text = letters[Math.floor(Math.random()*letters.length)];
-        ctx.fillText(text, i*font_size, drops[i]*font_size);
-
-        if(drops[i]*font_size > c.height && Math.random() > 0.975)
-            drops[i] = 0;
-
-        drops[i]++;
-    }
+    if(drops[i]*font_size>c.height && Math.random()>0.975)
+      drops[i]=0;
+    drops[i]++;
+  }
 }
+setInterval(draw,33);
 
-setInterval(draw, 33);
+// Hack simulation
+function startHack() {
+  document.getElementById("loading").style.display = "block";
+  var bar = document.getElementById("bar");
+  var width = 0;
+
+  var interval = setInterval(function() {
+    if (width >= 100) {
+      clearInterval(interval);
+
+      var pass = document.getElementById("pass").value;
+
+      if(pass === "1234") {
+        typeText("ACCESS GRANTED 😈<br>WELCOME TO SYSTEM...");
+      } else {
+        typeText("ACCESS DENIED ❌<br>TRY AGAIN...");
+      }
+
+    } else {
+      width++;
+      bar.style.width = width + "%";
+    }
+  }, 30);
+}
 
 // Typing effect
-var msg = "ACCESS GRANTED...\nWELCOME TO THE SYSTEM 😈";
-var i = 0;
-var speed = 50;
+function typeText(text) {
+  var i = 0;
+  var speed = 30;
+  document.getElementById("result").innerHTML = "";
 
-function typeWriter() {
-    if (i < msg.length) {
-        document.getElementById("text").innerHTML += msg.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
+  function typing() {
+    if (i < text.length) {
+      document.getElementById("result").innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
     }
+  }
+  typing();
 }
-
-typeWriter();
 </script>
 
 </body>
