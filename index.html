@@ -2,44 +2,64 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Azenx System</title>
+<title>Azenx Prince</title>
 
 <style>
 body {
   margin:0;
-  background:black;
-  color:#00ff00;
-  font-family: monospace;
+  font-family: Arial;
+  background: linear-gradient(135deg, #000000, #1a1a1a);
+  color:white;
   text-align:center;
 }
 
-/* Glow Box */
-.box {
-  margin-top:80px;
-  padding:20px;
-  border:1px solid #00ff00;
-  box-shadow:0 0 20px #00ff00;
+/* Profile */
+.profile {
+  margin-top:60px;
 }
 
-/* Button */
-button {
-  background:black;
-  color:#00ff00;
-  border:1px solid #00ff00;
-  padding:15px;
-  width:80%;
+.profile img {
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  border:3px solid #00ffcc;
+  box-shadow:0 0 20px #00ffcc;
+}
+
+h1 {
   margin:10px;
+  font-size:28px;
+}
+
+.bio {
+  color:#aaa;
+}
+
+/* Buttons */
+.btn {
+  display:block;
+  width:80%;
+  margin:15px auto;
+  padding:15px;
+  border-radius:30px;
   font-size:18px;
+  color:white;
+  text-decoration:none;
+  background: linear-gradient(45deg,#ff00cc,#3333ff);
+  box-shadow:0 0 15px #ff00cc;
+  transition:0.3s;
 }
 
-button:hover {
-  background:#00ff00;
-  color:black;
+.btn:hover {
+  transform:scale(1.05);
 }
 
-/* Matrix text */
-#text {
-  margin:20px;
+/* Start Button */
+.start {
+  background:black;
+  border:1px solid #00ff00;
+  color:#00ff00;
+  box-shadow:0 0 15px #00ff00;
 }
 </style>
 
@@ -47,63 +67,39 @@ button:hover {
 
 <body>
 
-<div class="box">
+<div class="profile">
 
-<h2 id="text"></h2>
+<img src="https://i.ibb.co/0jQz0hF/profile.jpg">
+
+<h1>Azenx Prince</h1>
+<p class="bio">Welcome to my world 🌍🔥</p>
+
+</div>
 
 <!-- START -->
-<button onclick="startSystem()">▶ START SYSTEM</button>
+<button class="btn start" onclick="start()">▶ Enter</button>
 
-<!-- Links -->
+<!-- LINKS -->
 <div id="links" style="display:none;">
 
-<button onclick="go('https://www.facebook.com/azenxprince?mibextid=ZbWKwL')">Facebook</button>
+<a class="btn" href="https://www.facebook.com/azenxprince?mibextid=ZbWKwL">Facebook</a>
 
-<button onclick="go('https://tiktok.com/@azenxprince')">TikTok</button>
+<a class="btn" href="https://tiktok.com/@azenxprince">TikTok</a>
 
-<button onclick="go('https://www.youtube.com/@lunaprincezenx')">YouTube</button>
-
-</div>
+<a class="btn" href="https://www.youtube.com/@lunaprincezenx">YouTube</a>
 
 </div>
 
-<!-- SOUND -->
+<!-- MUSIC -->
 <audio id="music">
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
 </audio>
 
-<audio id="beep">
-  <source src="https://www.soundjay.com/button/sounds/button-16.mp3">
-</audio>
-
 <script>
-
-let msg = "ACCESS GRANTED... WELCOME AZENX PRINCE";
-let i = 0;
-
-function type(){
-  if(i < msg.length){
-    document.getElementById("text").innerHTML += msg.charAt(i);
-    i++;
-    setTimeout(type,50);
-  }
+function start(){
+  document.getElementById("music").play();
+  document.getElementById("links").style.display="block";
 }
-
-function startSystem(){
-  document.getElementById("beep").play(); // beep sound
-  document.getElementById("music").play(); // music start
-  type();
-
-  setTimeout(()=>{
-    document.getElementById("links").style.display="block";
-  },2000);
-}
-
-function go(link){
-  document.getElementById("beep").play();
-  window.location.href = link;
-}
-
 </script>
 
 </body>
