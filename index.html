@@ -1,178 +1,24 @@
-<style>
-body {
-  margin: 0;
-  background: black;
-  color: #00ff00;
-  font-family: monospace;
-  overflow: hidden;
-}
+<button onclick="copyText()">COPY</button>
 
-#matrix {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
-
-#terminal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0,0,0,0.7);
-  padding: 20px;
-  width: 90%;
-  max-width: 400px;
-  border: 1px solid #0f0;
-  box-shadow: 0 0 20px #0f0;
-  font-size: 16px;
-}
-</style><!DOCTYPE html>
-<html>
-<head>
-<title>System Breach</title>
-
-<style>
-body {
-  margin: 0;
-  background: black;
-  color: #00ff00;
-  font-family: monospace;
-  overflow: hidden;
-}
-
-#matrix {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
-
-#terminal {
-  padding: 20px;
-  font-size: 14px;
-  white-space: pre-line;
-}
-
-.glitch {
-  font-size: 28px;
-  color: #0f0;
-  animation: glitch 1s infinite;
-}
-
-@keyframes glitch {
-  0% { text-shadow: 2px 0 red; }
-  50% { text-shadow: -2px 0 blue; }
-  100% { text-shadow: 2px 0 red; }
-}
-
-#progress {
-  width: 100%;
-  background: #111;
-  margin-top: 10px;
-}
-
-#bar {
-  width: 0%;
-  height: 10px;
-  background: #0f0;
-}
-</style>
-</head>
-
-<body>
-
-<canvas id="matrix"></canvas>
-
-<div id="terminal">
-  <div class="glitch">ACCESSING SYSTEM...</div>
-  <div id="output"></div>
-
-  <div id="progress">
-    <div id="bar"></div>
-  </div>
-</div>
-
-<audio autoplay loop>
-<source src="https://www.soundjay.com/button/beep-07.wav">
-</audio>
+<p id="text">Shan State is beautiful 🌄</p>
 
 <script>
-// MATRIX
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
-
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
-
-let letters = "01";
-letters = letters.split("");
-
-let fontSize = 14;
-let columns = canvas.width / fontSize;
-let drops = [];
-
-for (let x = 0; x < columns; x++) drops[x] = 1;
-
-function draw() {
-  ctx.fillStyle = "rgba(0,0,0,0.05)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  ctx.fillStyle = "#0f0";
-  ctx.font = fontSize + "px monospace";
-
-  for (let i = 0; i < drops.length; i++) {
-    let text = letters[Math.floor(Math.random()*letters.length)];
-    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
-
-    if (drops[i]*fontSize > canvas.height && Math.random() > 0.975)
-      drops[i] = 0;
-
-    drops[i]++;
-  }
+function copyText() {
+  let text = document.getElementById("text").innerText;
+  navigator.clipboard.writeText(text);
+  alert("Copied!");
 }
-setInterval(draw, 33);
-
-// TERMINAL TEXT
-let lines = [
-"[+] Connecting to server...",
-"[+] Bypassing firewall...",
-"[+] Injecting payload...",
-"[+] Accessing database...",
-"[+] Extracting files...",
-"[+] Tracking IP address...",
-"[+] Location found: UNKNOWN",
-"[+] Uploading data...",
-"[+] SYSTEM BREACHED ✔",
-"",
-"Welcome, Admin 😈"
-];
-
-let i = 0;
-let output = document.getElementById("output");
-
-function showLine() {
-  if (i < lines.length) {
-    output.innerHTML += lines[i] + "\n";
-    i++;
-    setTimeout(showLine, 800);
-  }
-}
-showLine();
-
-// LOADING BAR
-let width = 0;
-let bar = document.getElementById("bar");
-
-function load() {
-  if (width < 100) {
-    width++;
-    bar.style.width = width + "%";
-    setTimeout(load, 80);
-  }
-}
-load();
 </script>
+<button onclick="copyText()" style="background:black;color:#0f0;border:1px solid #0f0;padding:10px;">
+[ COPY DATA ]
+</button>
 
-</body>
-</html>
+<p id="text">ACCESS CODE: 192.168.1.1</p>
+
+<script>
+function copyText() {
+  let text = document.getElementById("text").innerText;
+  navigator.clipboard.writeText(text);
+  alert("DATA COPIED ✔");
+}
+</script>
