@@ -5,61 +5,47 @@
 
 <style>
 body {
-  margin:0;
-  background:black;
-  color:#0f0;
-  font-family:monospace;
-  overflow:hidden;
+  margin: 0;
+  background: black;
+  color: #00ff00;
+  font-family: monospace;
+  overflow: hidden;
 }
 
-/* Desktop */
-#desktop {
-  display:none;
-  width:100%;
-  height:100vh;
-  background:black;
+#matrix {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
-/* Icons */
-.icon {
-  width:80px;
-  text-align:center;
-  margin:20px;
-  cursor:pointer;
+#terminal {
+  padding: 20px;
 }
 
-/* Terminal window */
-#terminalWindow {
-  display:none;
-  position:absolute;
-  top:100px;
-  left:50px;
-  width:80%;
-  height:60%;
-  background:black;
-  border:1px solid #0f0;
-  padding:10px;
-  overflow:auto;
+.glitch {
+  font-size: 30px;
+  position: relative;
+  color: #0f0;
+  animation: glitch 1s infinite;
 }
 
-/* Login */
-#login {
-  text-align:center;
-  margin-top:150px;
+@keyframes glitch {
+  0% { text-shadow: 2px 0 red; }
+  50% { text-shadow: -2px 0 blue; }
+  100% { text-shadow: 2px 0 red; }
 }
 
-input {
-  background:black;
-  border:1px solid #0f0;
-  color:#0f0;
-  padding:5px;
+.cursor {
+  display: inline-block;
+  width: 10px;
+  background: #0f0;
+  animation: blink 1s infinite;
 }
 
-/* Matrix canvas */
-canvas {
-  position:fixed;
-  top:0;
-  left:0;
+@keyframes blink {
+  0%,50%,100% { opacity: 1; }
+  25%,75% { opacity: 0; }
 }
 </style>
 </head>
@@ -68,87 +54,65 @@ canvas {
 
 <canvas id="matrix"></canvas>
 
-<div id="login">
-<h1>SYSTEM LOCKED</h1>
-<p>Enter Root Password:</p>
-<input type="password" id="pass" onkeydown="login(event)">
+<div id="terminal">
+  <div class="glitch">ACCESS GRANTED</div>
+  <p id="typing"></p>
+  <span class="cursor"></span>
 </div>
 
-<div id="desktop">
-
-<div class="icon" onclick="openTerminal()">💻<br>Terminal</div>
-
-<div id="terminalWindow"></div>
-
-</div>
+<audio id="sound" autoplay loop>
+  <source src="https://www.soundjay.com/button/beep-07.wav">
+</audio>
 
 <script>
-// MATRIX EFFECT
-var c=document.getElementById("matrix");
-var ctx=c.getContext("2d");
-c.height=window.innerHeight;
-c.width=window.innerWidth;
+// Matrix Effect
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
 
-var letters="01".split("");
-var font_size=14;
-var columns=c.width/font_size;
-var drops=[];
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
 
-for(var x=0;x<columns;x++) drops[x]=1;
+let letters = "01";
+letters = letters.split("");
 
-function draw(){
-  ctx.fillStyle="rgba(0,0,0,0.05)";
-  ctx.fillRect(0,0,c.width,c.height);
-  ctx.fillStyle="#0f0";
-  ctx.font=font_size+"px monospace";
+let fontSize = 14;
+let columns = canvas.width / fontSize;
+let drops = [];
 
-  for(var i=0;i<drops.length;i++){
-    var text=letters[Math.floor(Math.random()*letters.length)];
-    ctx.fillText(text,i*font_size,drops[i]*font_size);
-    if(drops[i]*font_size>c.height && Math.random()>0.975)
-      drops[i]=0;
+for (let x = 0; x < columns; x++)
+  drops[x] = 1;
+
+function draw() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "#0f0";
+  ctx.font = fontSize + "px monospace";
+
+  for (let i = 0; i < drops.length; i++) {
+    let text = letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+
+    if (drops[i]*fontSize > canvas.height && Math.random() > 0.975)
+      drops[i] = 0;
+
     drops[i]++;
   }
 }
-setInterval(draw,33);
+setInterval(draw, 33);
 
-// LOGIN
-function login(e){
-  if(e.key==="Enter"){
-    var pass=document.getElementById("pass").value;
-    if(pass==="root"){
-      document.getElementById("login").style.display="none";
-      document.getElementById("desktop").style.display="block";
-    } else {
-      alert("ACCESS DENIED ❌");
-    }
+// Typing Effect
+let text = "Welcome to the system...\nTracking IP...\nAccessing data...\nComplete.";
+let i = 0;
+
+function typeWriter() {
+  if (i < text.length) {
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeWriter, 50);
   }
 }
-
-// TERMINAL
-function openTerminal(){
-  var term=document.getElementById("terminalWindow");
-  term.style.display="block";
-
-  term.innerHTML="> Booting system...<br>";
-
-  var lines=[
-    "> Connecting...",
-    "> Injecting exploit...",
-    "> Accessing files...",
-    "> SUCCESS 😈"
-  ];
-
-  var i=0;
-  function next(){
-    if(i<lines.length){
-      term.innerHTML+=lines[i]+"<br>";
-      i++;
-      setTimeout(next,800);
-    }
-  }
-  next();
-}
+typeWriter();
 </script>
 
 </body>
